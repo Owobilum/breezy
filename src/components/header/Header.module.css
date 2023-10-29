@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+}
+
+h1 {
+  font-size: 1.125rem; /*18px */
+}
+
+@media screen and (min-height: 768px) {
+  .container {
+    padding-top: 2rem;
+  }
+}
