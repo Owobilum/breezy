@@ -20,7 +20,7 @@ function useCityWeather(city: string): IWeatherInfo | null {
     async function fetchWeather(query: string): Promise<void> {
       try {
         const res = await fetch(
-          `${BASE_URL}/current?access_key=${API_KEY}&query=${query}&unit=m`,
+          `${BASE_URL}/current?access_key=${API_KEY}&query=${query}&unit=m`
         );
         const data: IWeatherInfo = await res.json();
         if (data?.current) {
