@@ -7,6 +7,7 @@ const API_KEY = import.meta.env?.VITE_WEATHERSTACK_KEY;
 const BASE_URL = 'http://api.weatherstack.com';
 const MAX_RETRIES = 1;
 const RETRY_DELAY = 1000;
+const CACHE_TIME = 1 * 1000 * 60 * 5; // 5 miuntes
 
 function useCityWeather(city: string): IWeatherInfo | null {
   const [cityWeather, setCityWeather] = useState<IWeatherInfo | null>(null);
@@ -14,6 +15,8 @@ function useCityWeather(city: string): IWeatherInfo | null {
 
   useEffect(() => {
     if (!city) return;
+    const storedCity = getStoredCity(city);
+
     async function fetchWeather(query: string): Promise<void> {
       try {
         const res = await fetch(
@@ -33,13 +36,16 @@ function useCityWeather(city: string): IWeatherInfo | null {
             setRetryCount((prevCount) => prevCount + 1);
           }, RETRY_DELAY);
         } else {
-          const storedCity = getStoredCity(city);
           setCityWeather(storedCity?.weather || null);
         }
       }
     }
 
-    fetchWeather(city);
+    if (storedCity?.weather && Date.now() - storedCity.storedAt < CACHE_TIME) {
+      setCityWeather(storedCity.weather);
+    } else {
+      fetchWeather(city);
+    }
   }, [city, retryCount]); // retryCount in dependencies triggers retries
 
   return cityWeather;

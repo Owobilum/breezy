@@ -13,3 +13,7 @@
 .h2 {
   font-family: var(--font-primary);
 }
+
+.message {
+  font-family: var(--font-primary);
+}

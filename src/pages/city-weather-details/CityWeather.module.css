@@ -11,11 +11,11 @@
 .like_icon {
   height: 1.5rem;
   width: 1.5rem;
-  fill: var(--color-primary);
+  fill: white;
 }
 
-.like_icon[data-is-fave='false'] {
-  fill: white;
+.like_icon[data-is-fave='true'] {
+  fill: var(--color-primary);
 }
 
 .info_box {

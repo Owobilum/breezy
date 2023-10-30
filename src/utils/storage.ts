@@ -6,6 +6,7 @@ const FAVOURITES_KEY = 'breezy_favourties';
 export function getStoredCity(city: string): {
   weather: IWeatherInfo | null;
   notes: INote[] | null;
+  storedAt: number;
 } | null {
   const storedCity = localStorage.getItem(city);
   return storedCity ? JSON.parse(storedCity) : null;
@@ -15,18 +16,27 @@ export function setStoredCityWeather(
   city: string,
   weather: IWeatherInfo
 ): void {
+  const storedAt = Date.now();
   const storedCity = getStoredCity(city);
 
   if (!storedCity) {
-    localStorage.setItem(city, JSON.stringify({ weather, notes: null }));
+    localStorage.setItem(
+      city,
+      JSON.stringify({ weather, notes: null, storedAt })
+    );
     return;
   }
-  localStorage.setItem(city, JSON.stringify({ ...storedCity, weather }));
+  localStorage.setItem(
+    city,
+    JSON.stringify({ ...storedCity, weather, storedAt })
+  );
   window.dispatchEvent(new Event('storage'));
 }
 
 export function setStoredCityNote(city: string, note: string): void {
   const storedCity = getStoredCity(city);
+
+  const storedAt = Date.now();
 
   const noteObject: INote = {
     text: note,
@@ -35,7 +45,7 @@ export function setStoredCityNote(city: string, note: string): void {
   if (!storedCity) {
     localStorage.setItem(
       city,
-      JSON.stringify({ notes: [noteObject], weather: null })
+      JSON.stringify({ notes: [noteObject], weather: null, storedAt })
     );
     window.dispatchEvent(new Event('storage'));
     return;
@@ -146,19 +156,3 @@ export function deleteStoredFavourite(favourite: string) {
 export function clearStoredCity(city: string): void {
   localStorage.removeItem(city);
 }
-
-// export function getStoredCityWeather(city: string): IWeatherInfo | null {
-//   const storedCity = localStorage.getItem(city);
-//   return storedCity ? JSON.parse(storedCity) : null;
-// }
-
-// export function setStoredCityWeather(
-//   weather: IWeatherInfo,
-//   city: string
-// ): void {
-//   localStorage.setItem(city, JSON.stringify(weather));
-// }
-
-// export function clearStoredCityWeather(city: string): void {
-//   localStorage.removeItem(city);
-// }

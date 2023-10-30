@@ -42,6 +42,11 @@ function FavouriteCities(): ReactElement {
           sortedFavourites?.map((city) => (
             <CityCard key={city} city={city} onClick={removeFavourite} />
           ))}
+        {!sortedFavourites?.length && (
+          <p className={styles.message}>
+            Your favourite cites will appear here...
+          </p>
+        )}
       </div>
     </section>
   );
