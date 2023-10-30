@@ -21,9 +21,6 @@ function useCityWeather(city: string): IWeatherInfo | null {
       try {
         const res = await fetch(
           `${BASE_URL}/current?access_key=${API_KEY}&query=${query}&unit=m`,
-          {
-            referrerPolicy: 'unsafe-url',
-          }
         );
         const data: IWeatherInfo = await res.json();
         if (data?.current) {
