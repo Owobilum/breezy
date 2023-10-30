@@ -20,7 +20,10 @@ function useCityWeather(city: string): IWeatherInfo | null {
     async function fetchWeather(query: string): Promise<void> {
       try {
         const res = await fetch(
-          `${BASE_URL}/current?access_key=${API_KEY}&query=${query}&unit=m`
+          `${BASE_URL}/current?access_key=${API_KEY}&query=${query}&unit=m`,
+          {
+            referrerPolicy: 'unsafe-url',
+          }
         );
         const data: IWeatherInfo = await res.json();
         if (data?.current) {
@@ -42,6 +45,7 @@ function useCityWeather(city: string): IWeatherInfo | null {
     }
 
     if (storedCity?.weather && Date.now() - storedCity.storedAt < CACHE_TIME) {
+      // the weather info gets stale every 5 minutes
       setCityWeather(storedCity.weather);
     } else {
       fetchWeather(city);
