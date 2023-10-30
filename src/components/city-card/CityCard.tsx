@@ -1,7 +1,8 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import styles from './CityCard.module.css';
 import useCityWeather from '../../hooks/useCityWeather';
+import { Icon } from '../icons';
 
 interface ICityCard {
   city: string;
@@ -10,39 +11,34 @@ interface ICityCard {
 
 function CityCard({ city, onClick }: ICityCard) {
   const cityWeather = useCityWeather(city);
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div
-      style={{ position: 'relative', border: 'solid green', padding: 32 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <article className={styles.container}>
       <button
         type="button"
         onClick={() => onClick(city)}
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          display: isHovered ? 'inline' : 'none',
-        }}
+        className={`ghost_btn ${styles.btn}`}
       >
-        X
+        <Icon
+          title="close"
+          height={18}
+          width={18}
+          aria-label="delete_icon"
+          className={styles.close_icon}
+        />
       </button>
-      <Link
-        style={{
-          height: 100,
-          width: 100,
-          display: 'grid',
-          placeItems: 'center',
-          border: 'solid red',
-        }}
-        to={`/cities/${city}`}
-      >
-        <span>{`city ${city}: Temperature ${cityWeather?.current?.temperature}`}</span>
+      <Link className={`${styles.link}`} to={`/cities/${city}`}>
+        <span className={`${styles.location}`}>
+          <Icon title="location" /> {`${city}`}
+        </span>
+        <span className={styles.temperature}>
+          <Icon title="temperature" />{' '}
+          {cityWeather?.current?.temperature
+            ? `${cityWeather.current.temperature}°C`
+            : 'unkwown'}
+        </span>
       </Link>
-    </div>
+    </article>
   );
 }
 

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Home from './pages/home/Home';
-import NotFound from './pages/NotFound';
+import NotFound from './pages/not-found/NotFound';
 import CityWeatherDetails from './pages/city-weather-details/CityWeatherDetails';
 import Layout from './components/layout/Layout';
 

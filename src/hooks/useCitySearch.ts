@@ -25,18 +25,15 @@ function useCitySearch(city: string): UseCitySearch {
   const timeoutIdRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    console.log({ city });
     if (!city) return;
     setState('typing');
     clearTimeout(timeoutIdRef.current);
     async function searchCity(query: string): Promise<void> {
-      //   setIsLoading(true);
       try {
         setState('loading');
         const res = await fetch(`${BASE_URL}/json?q=${query}&key=${API_KEY}`);
         const data: ISearchResponse = await res.json();
         const { results } = data;
-        console.log({ results });
         setSearchResults(results);
         setState('idle');
       } catch (error) {

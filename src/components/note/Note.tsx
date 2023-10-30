@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { type ReactElement, useState } from 'react';
 
+import styles from './Note.module.css';
 import { editStoredCityNote, deleteStoredCityNote } from '../../utils/storage';
 import type { INote } from '../../types';
+import { Icon } from '../icons';
 
 function Note({ note, city }: { note: INote; city: string }): ReactElement {
   const { text } = note;
@@ -18,29 +21,53 @@ function Note({ note, city }: { note: INote; city: string }): ReactElement {
   };
 
   return (
-    <li>
+    <li className={styles.container}>
       {isEditing && (
         <>
+          <label htmlFor="create-note" className="sr-only">
+            Create Note
+          </label>
           <textarea
-            name=""
-            id=""
+            id="create-note"
             cols={30}
             rows={10}
             value={textValue}
             onChange={(e) => setTextValue(e.target.value)}
+            className={styles.textarea}
           />
-          <button type="button" onClick={handleSave}>
+          <button
+            type="button"
+            onClick={handleSave}
+            className={styles.save_btn}
+          >
             Save Edited Note
           </button>
         </>
       )}
-      <span>{text}</span>
-      <button type="button" onClick={() => setIsEditing(true)}>
-        edit
-      </button>
-      <button type="button" onClick={handleDelete}>
-        delete
-      </button>
+
+      {!isEditing && (
+        <>
+          <span>{text}</span>
+          <span className={styles.action_box}>
+            <button
+              type="button"
+              onClick={() => setIsEditing(true)}
+              className="ghost_btn"
+              aria-label="edit"
+            >
+              <Icon title="edit" className={styles.edit_icon} />
+            </button>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="ghost_btn"
+              aria-label="delete"
+            >
+              <Icon title="close" className={styles.delete_icon} />
+            </button>
+          </span>
+        </>
+      )}
     </li>
   );
 }

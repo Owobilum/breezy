@@ -1,0 +1,54 @@
+.container {
+  padding: 1rem;
+  font-family: var(--font-primary);
+}
+
+.textarea {
+  width: 100%;
+}
+
+.action_box {
+  display: block;
+  padding: 1rem;
+}
+.save_btn {
+  background-color: var(--color-primary);
+  color: white;
+  font-family: var(--font-primary);
+  border-radius: 5px;
+  display: block;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+.edit_icon {
+  fill: var(--color-primary);
+  height: 1rem;
+  width: 1rem;
+}
+
+.delete_icon {
+  fill: var(--color-red);
+  height: 1rem;
+  width: 1rem;
+  margin: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .textarea {
+    max-width: 600px;
+  }
+
+  .edit_icon {
+    fill: var(--color-primary);
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .delete_icon {
+    fill: var(--color-red);
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+}

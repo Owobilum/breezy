@@ -17,22 +17,24 @@ function useCityWeather(city: string): IWeatherInfo | null {
     async function fetchWeather(query: string): Promise<void> {
       try {
         const res = await fetch(
-          `${BASE_URL}/current?access_key=${API_KEY}&query=${query}`
+          `${BASE_URL}/current?access_key=${API_KEY}&query=${query}&unit=m`
         );
         const data: IWeatherInfo = await res.json();
-        setStoredCityWeather(city, data);
-        setCityWeather(data);
+        if (data?.current) {
+          setStoredCityWeather(city, data);
+          setCityWeather(data);
+        } else {
+          throw new Error(data?.error?.type || 'weather api error');
+        }
       } catch (error) {
-        // console.error('Error fetching weather data:', error);
+        console.error('Error fetching weather data:', error);
         if (retryCount < MAX_RETRIES) {
-          //   console.log(`Retrying in ${RETRY_DELAY / 1000} seconds...`);
           setTimeout(() => {
             setRetryCount((prevCount) => prevCount + 1);
           }, RETRY_DELAY);
         } else {
           const storedCity = getStoredCity(city);
           setCityWeather(storedCity?.weather || null);
-          //   console.error(`Max retries reached. Unable to fetch weather data.`);
         }
       }
     }

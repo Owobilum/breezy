@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom';
 
 import styles from './Header.module.css';
 import Search from '../search/Search';
+import { getTodaysDate } from '../../utils';
 
 function Header(): ReactElement {
   return (
     <header className={styles.container}>
-      <Link to="/">Logo</Link>
+      <Link to="/" className={styles.logo}>
+        Breezy
+      </Link>
       <Search />
-      <div>Hi</div>
+      <p className={styles.date}>{getTodaysDate()}</p>
     </header>
   );
 }

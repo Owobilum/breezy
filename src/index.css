@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+:root {
+  --color-primary: #00635b;
+  --color-secondary: #d0f7fa;
+  --color-purple: #9c4de2;
+  --color-red: #a80000;
+  --color-offWhite: #f5f5f5;
+  --font-primary: 'Poppins', sans-serif;
+  --font-pacifo: 'Pacifico', cursive;
+}
+
 /* CSS Reset */
 body,
 h1,
@@ -51,6 +65,11 @@ textarea {
 
 button {
   overflow: visible;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
 }
 
 button,
@@ -90,4 +109,26 @@ html [type='button'],
 
 .hidden {
   display: none;
+}
+
+body {
+  background-color: var(--color-offWhite);
+  font-family: (var(--font-primary));
+}
+textarea {
+  border-radius: 8px;
+}
+
+textarea:focus {
+  border: 2px solid var(--color-primary);
+  outline: none;
+}
+
+.ghost_btn {
+  background: none;
+  border: none;
+  outline: none;
+}
+.ghost_btn:focus {
+  border: 1px solid var(--color-primary);
 }

@@ -1,19 +1,20 @@
 import { ReactElement, useState, useEffect, useMemo } from 'react';
 
+import styles from './FavouriteCities.module.css';
 import CityCard from '../city-card/CityCard';
 import {
   deleteStoredFavourite,
   getStoredFavourites,
 } from '../../utils/storage';
 
+const removeFavourite = (cityName: string) => {
+  deleteStoredFavourite(cityName);
+};
+
 function FavouriteCities(): ReactElement {
   const [storedFavourites, setStoredFavourites] = useState(
     getStoredFavourites()
   );
-
-  const removeFavourite = (cityName: string) => {
-    deleteStoredFavourite(cityName);
-  };
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -34,14 +35,15 @@ function FavouriteCities(): ReactElement {
   }, [storedFavourites]);
 
   return (
-    <div
-      style={{ display: 'flex', gap: 32, padding: 40, border: 'solid green' }}
-    >
-      {!!sortedFavourites?.length &&
-        sortedFavourites?.map((city) => (
-          <CityCard key={city} city={city} onClick={removeFavourite} />
-        ))}
-    </div>
+    <section className={styles.section}>
+      <h2 className={styles.h2}>Your Favourite Cities</h2>
+      <div className={styles.container}>
+        {!!sortedFavourites?.length &&
+          sortedFavourites?.map((city) => (
+            <CityCard key={city} city={city} onClick={removeFavourite} />
+          ))}
+      </div>
+    </section>
   );
 }
 
